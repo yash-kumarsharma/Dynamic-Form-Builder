@@ -1,0 +1,58 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Form {
+id Int @id @default(autoincrement())
+title String
+description String?
+fields Field[]
+submissions Submission[]
+createdAt DateTime @default(now())
+}
+
+model Field {
+id Int @id @default(autoincrement())
+form Form @relation(fields: [formId], references: [id])
+formId Int
+label String
+type String // e.g. text, number, email, select, checkbox, textarea
+required Boolean @default(false)
+order Int
+options Option[]
+}
+
+model Option {
+id Int @id @default(autoincrement())
+field Field @relation(fields: [fieldId], references: [id])
+fieldId Int
+value String
+}
+
+model Submission {
+id Int @id @default(autoincrement())
+form Form @relation(fields: [formId], references: [id])
+formId Int
+answers Answer[]
+createdAt DateTime @default(now())
+}
+
+model Answer {
+id Int @id @default(autoincrement())
+submission Submission @relation(fields: [submissionId], references: [id])
+submissionId Int
+fieldId Int
+value String
+}

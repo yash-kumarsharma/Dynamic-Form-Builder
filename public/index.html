@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Custom Form Builder</h1>
+        </header>
+
+        <main class="builder">
+            <section class="panel" id="designer">
+                <h2>Designer</h2>
+                <div class="form-meta">
+                    <input id="formTitle" placeholder="Form title" />
+                    <input id="formDesc" placeholder="Form description (optional)" />
+                </div>
+
+                <div id="fields"></div>
+
+                <div class="add-field">
+                    <select id="newFieldType">
+                        <option value="text">Text</option>
+                        <option value="email">Email</option>
+                        <option value="number">Number</option>
+                        <option value="textarea">Textarea</option>
+                        <option value="select">Select</option>
+                        <option value="checkbox">Checkbox</option>
+                    </select>
+                    <button id="addFieldBtn">Add field</button>
+                </div>
+                <br>
+                <button id="saveFormBtn" class="primary">Save form</button>
+
+                <div id="saveResult"></div>
+            </section>
+
+            <section class="panel" id="preview">
+                <h2>Preview / Fill</h2>
+                <div id="previewArea">No form loaded</div>
+
+                <div id="submitResult"></div>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
