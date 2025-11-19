@@ -2,22 +2,47 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
-const formsRouter = require('./routes/forms');
 
-const PORT = 4000;
-const app = express();
+const { connectRedis } = require('./config/redisClient');
+const { attach: attachWs } = require('./utils/ws');
 
-app.use(cors());
-app.use(express.json());
+const authRoutes = require('./routes/auth');
+const formsRoutes = require('./routes/forms');
 
-app.use('/api/forms', formsRouter);
+const PORT = process.env.PORT || 4000;
+const WS_PORT = parseInt(process.env.WS_PORT || '4001', 10);
 
-app.use(express.static(path.join(__dirname, 'public')));
+async function start() {
+  
+  await connectRedis();
+  console.log('Connected to Redis');
 
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
+  const app = express();
+  app.use(cors());
+  app.use(express.json());
 
-app.listen(PORT, () => {
-    console.log(`Server listening on http://localhost:${PORT}`);
+  
+  app.use('/api/auth', authRoutes);
+  app.use('/api/forms', formsRoutes);
+
+  
+  app.use(express.static(path.join(__dirname, 'public')));
+  app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'views/index.html'));
+  });
+
+  const server = app.listen(PORT, () => {
+    console.log(`Normal server running on port: ${PORT}`);
+  });
+
+  
+  const WebSocket = require('ws');
+  const wss = new WebSocket.Server({ port: WS_PORT });
+  attachWs(wss);
+  console.log(`WebSocket server running on port: ${WS_PORT}`);
+}
+
+start().catch(err => {
+  console.error(err);
+  process.exit(1);
 });
