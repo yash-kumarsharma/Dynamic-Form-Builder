@@ -15,44 +15,54 @@ datasource db {
 }
 
 model Form {
-id Int @id @default(autoincrement())
-title String
-description String?
-fields Field[]
-submissions Submission[]
-createdAt DateTime @default(now())
+  id          Int          @id @default(autoincrement())
+  title       String
+  description String?
+  fields      Field[]
+  submissions Submission[]
+  shareToken  String?     @unique
+  isPublic    Boolean     @default(false)
+  createdAt   DateTime     @default(now())
 }
 
 model Field {
-id Int @id @default(autoincrement())
-form Form @relation(fields: [formId], references: [id])
-formId Int
-label String
-type String // e.g. text, number, email, select, checkbox, textarea
-required Boolean @default(false)
-order Int
-options Option[]
+  id       Int      @id @default(autoincrement())
+  form     Form     @relation(fields: [formId], references: [id])
+  formId   Int
+  label    String
+  type     String // e.g. text, number, email, select, checkbox, textarea
+  required Boolean  @default(false)
+  order    Int
+  options  Option[]
 }
 
 model Option {
-id Int @id @default(autoincrement())
-field Field @relation(fields: [fieldId], references: [id])
-fieldId Int
-value String
+  id      Int    @id @default(autoincrement())
+  field   Field  @relation(fields: [fieldId], references: [id])
+  fieldId Int
+  value   String
 }
 
 model Submission {
-id Int @id @default(autoincrement())
-form Form @relation(fields: [formId], references: [id])
-formId Int
-answers Answer[]
-createdAt DateTime @default(now())
+  id        Int      @id @default(autoincrement())
+  form      Form     @relation(fields: [formId], references: [id])
+  formId    Int
+  answers   Answer[]
+  createdAt DateTime @default(now())
 }
 
 model Answer {
-id Int @id @default(autoincrement())
-submission Submission @relation(fields: [submissionId], references: [id])
-submissionId Int
-fieldId Int
-value String
+  id           Int        @id @default(autoincrement())
+  submission   Submission @relation(fields: [submissionId], references: [id])
+  submissionId Int
+  fieldId      Int
+  value        String
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  name      String?
+  createdAt DateTime @default(now())
 }

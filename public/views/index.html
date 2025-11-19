@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Login / Register - Form Builder</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <style>
+    
+  </style>
+</head>
+<body>
+  <div class="auth-container">
+    <div class="container">
+      <div class="topbar">
+        <img src="../images/login.webp" alt="login">
+      </div>
+    </div>
+
+    <div class="auth-grid">
+      <div class="card auth-card">
+        
+        <div class="form-toggle">
+            <button id="login-btn" class="toggle-btn" onclick="showForm('login-form')">Sign In</button>
+            <button id="register-btn" class="toggle-btn" onclick="showForm('register-form')">Create Account</button>
+        </div>
+        
+        <div id="login-form" class="auth-form">
+            <div class="form-group">
+                <label for="loginEmail">Email Address</label>
+                <input id="loginEmail" class="input" placeholder="Your email" />
+            </div>
+            <div class="form-group">
+                <label for="loginPass">Password</label>
+                <input id="loginPass" class="input" type="password" placeholder="Secure password" />
+            </div>
+            
+            <button class="btn" style="width: 100%; margin-top: 10px;" onclick="login()">Login</button>
+            <p class="small center" style="margin-top: 15px;">
+                <!-- <button class="btn ghost" style="padding: 0; font-weight: 500;" onclick="window.location='/views/share.html'">Open Shared Form</button> -->
+            </p>
+        </div>
+
+        <div id="register-form" class="auth-form">
+            <div class="form-group">
+                <label for="regName">Full Name</label>
+                <input id="regName" class="input" placeholder="Full name" />
+            </div>
+            <div class="form-group">
+                <label for="regEmail">Email Address</label>
+                <input id="regEmail" class="input" placeholder="Email" />
+            </div>
+            <div class="form-group">
+                <label for="regPass">Choose Password</label>
+                <input id="regPass" class="input" type="password" placeholder="Min 8 characters" />
+            </div>
+            
+            <button class="btn" style="width: 100%; margin-top: 10px;" onclick="register()">Register</button>
+            <!-- <p class="small center" style="margin-top: 15px;">Use a valid email. Passwords are stored hashed.</p> -->
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/utils.js"></script>
+  <script src="/js/auth.js"></script>
+  <script>
+    // Note: The showForm function is crucial for toggling the forms.
+    // If you prefer to place this in /js/auth.js or /js/utils.js, 
+    // ensure it's loaded before the DOMContentLoaded listener.
+    /* Inline script for demonstration: ensures one form is visible */
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('login-btn').click();
+    });
+    function showForm(formId) {
+        document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
+        document.getElementById(formId).classList.add('active');
+        document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById(formId.replace('-form', '-btn')).classList.add('active');
+    }
+  </script>
+</body>
+</html>

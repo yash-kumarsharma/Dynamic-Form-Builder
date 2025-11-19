@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Live Dashboard</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <div class="container">
+    <div class="topbar">
+      <div class="brand"><div class="logo">FB</div><h1>Live Submissions</h1></div>
+      <div class="top-actions"><button class="btn ghost" onclick="logout()">Logout</button></div>
+    </div>
+
+    <div class="card" id="dashboardRoot">
+      <div style="display:flex;gap:8px;margin-bottom:12px">
+        <input id="listenFormId" class="input" placeholder="Form ID to subscribe" />
+        <button id="startWs" class="btn">Start Listening</button>
+      </div>
+
+      <div id="wsOutput" class="ws-box"></div>
+    </div>
+  </div>
+
+  <script src="/js/utils.js"></script>
+  <script src="/js/dashboard.js"></script>
+</body>
+</html>

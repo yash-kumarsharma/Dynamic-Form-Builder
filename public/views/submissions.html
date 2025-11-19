@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Submissions</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <div class="container">
+    <div class="topbar">
+      <div class="brand"><div class="logo">FB</div><h1>Submissions</h1></div>
+      <div class="top-actions"><button class="btn ghost" onclick="logout()">Logout</button></div>
+    </div>
+
+    <div class="card" id="submissionsRoot">
+      <div style="display:flex;gap:8px;margin-bottom:12px">
+        <input id="formIdForSubs" class="input" placeholder="Form ID to view submissions" />
+        <button id="refreshSubs" class="btn" onclick="(function(){})()">Refresh</button>
+      </div>
+
+      <table class="table" id="subsTable">
+        <tr><th>ID</th><th>Time</th><th>Answers</th></tr>
+      </table>
+    </div>
+  </div>
+
+  <script src="/js/utils.js"></script>
+  <script src="/js/submissions.js"></script>
+  <script>
+const WS_PORT = 4001;
+const formId = new URLSearchParams(location.search).get('formId');
+
+const ws = new WebSocket(`ws://localhost:${WS_PORT}`);
+
+ws.onopen = () => {
+  ws.send(JSON.stringify({ type: "subscribe", formId: Number(formId) }));
+};
+
+ws.onmessage = msg => {
+  const data = JSON.parse(msg.data);
+
+  if(data.type === "new_submission"){
+    alert("New submission received!");
+    document.getElementById("refreshSubs").click();
+  }
+};
+</script>
+</body>
+</html>

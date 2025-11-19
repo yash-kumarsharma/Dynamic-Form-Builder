@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Form Builder</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="topbar">
+            <div class="brand">
+                <div class="logo">FB</div>
+                <h1>Form Builder</h1>
+            </div>
+            <div class="top-actions">
+                <button class="btn ghost" onclick="logout()">Logout</button>
+                <a class="btn" href="/views/dashboard.html">Live</a>
+            </div>
+        </div>
+
+        <div class="card" id="builderRoot">
+            <div style="display:flex;gap:14px;align-items:center;margin-bottom:12px">
+                <input id="formTitleInput" class="input col" placeholder="Form title (e.g. Customer Feedback)">
+                <input id="formDescInput" class="input col" placeholder="Short description (optional)">
+            </div>
+
+            <div class="row" style="align-items:flex-start">
+                <div class="col">
+                    <div id="fieldsList"></div>
+
+                    <div class="row" style="margin-top:8px">
+                        <select id="newFieldType" class="input" style="width:220px">
+                            <option value="text">Text</option>
+                            <option value="email">Email</option>
+                            <option value="number">Number</option>
+                            <option value="textarea">Textarea</option>
+                            <option value="select">Select</option>
+                        </select>
+                        <button id="addFieldBtn" class="btn">Add field</button>
+                        <button id="saveFormBtn" class="btn">Save form</button>
+                    </div>
+
+                    <div id="shareArea" class="share-area"></div>
+                    <div id="saveMsg" class="kv" style="margin-top:8px"></div>
+                </div>
+
+                <div style="width:380px">
+                    <div class="card">
+                        <h3 class="small">Preview</h3>
+                        <div class="preview" id="previewArea"></div>
+                    </div>
+
+                    <div class="card">
+                        <h3 class="small">Quick Actions</h3>
+                        <div class="row">
+                            <button class="btn gray" onclick="goToSubs()">Submissions</button>
+                            <button class="btn gray" onclick="goToLive()">Live</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="/js/utils.js"></script>
+    <script src="/js/forms.js"></script>
+    <script>
+        function logout() {
+            // Clear tokens or user data
+            localStorage.removeItem("token");
+            sessionStorage.clear(); // optional
+
+            // Redirect to login page
+            window.location.href = "/views/index.html";
+        }
+    </script>
+</body>
+
+</html>
